@@ -16,8 +16,8 @@ mail_host="smtp.gmail.com"  #设置服务器
 mail_user="tlmorphing@gmail.com"    #用户名
 mail_pass="morphing"   #口令
 
-sender = 'tllevybright@gmail.com'
-receivers = ['tllevybright@gmail.com','452479893@qq.com']  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
+sender = 'tlmorphing@gmail.com'
+receivers = ['tlmorphing@gmail.com']  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
 
 # body = getData.getfile('content.html')
 temMin = round(dictData['main']['temp_min']-273.15,1)
