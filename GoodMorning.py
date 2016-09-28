@@ -39,6 +39,6 @@ try:
     smtpObj.starttls()
     smtpObj.login(mail_user, mail_pass)
     smtpObj.sendmail(sender, receivers, message.as_string())
-    print("邮件发送成功")
+    print("Successful")
 except smtplib.SMTPException:
-    print("Error: 无法发送邮件")
+    print("Error")
