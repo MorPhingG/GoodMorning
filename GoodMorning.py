@@ -26,7 +26,7 @@ temMax = round(dictData['main']['temp_max']-273.15,1)
 
 
 # 三个参数：第一个为文本内容，第二个 plain 设置文本格式，第三个 utf-8 设置编码
-message = MIMEText('早上好,芝加哥的朋友\n'+'今天最低气温 : ' + str(temMin) + '°C' + ' 最高气温 : ' + str(temMax) + '°C\n' + '祝您考试顺利', 'plain', 'utf-8')
+message = MIMEText('早上好,芝加哥的朋友\n'+'今天最低气温 : ' + str(temMin) + '°C' + ' 最高气温 : ' + str(temMax) + '°C\n' + '好冷啊', 'plain', 'utf-8')
 message['From'] = Header("力量的花生", 'utf-8')
 message['To'] = Header("渺小的凡人", 'utf-8')
 
@@ -42,3 +42,4 @@ try:
     print("Successful")
 except smtplib.SMTPException:
     print("Error")
+
