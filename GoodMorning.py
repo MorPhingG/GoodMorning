@@ -20,13 +20,27 @@ mail_user="tlmorphing@gmail.com"    #用户名
 mail_pass="morphing"   #口令
 
 sender = 'tlmorphing@gmail.com'
-receivers = ['tlmorphing@gmail.com', 'yzhou108@hawk.iit.edu', 'byang24@hawk.iit.edu']  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
-# receivers = ['tlmorphing@gmail.com']  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
+# receivers = ['tlmorphing@gmail.com', 'yzhou108@hawk.iit.edu', 'byang24@hawk.iit.edu']  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
+receivers = ['tlmorphing@gmail.com']  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
 
-# body = getData.getfile('content.html')
+
+tem = round(dictData['main']['temp']-273.15,1)
+historyFile = './history'
+with open(historyFile, 'r') as f:
+    hisTep = f.read()
+
+if float(hisTep)<tem:
+    word = '今天好像暖和点了'
+else:
+    word = '今天又变冷了'
+with open(historyFile, 'w') as f:
+    f.write(str(tem))
+
 temMin = round(dictData['main']['temp_min']-273.15,1)
 temMax = round(dictData['main']['temp_max']-273.15,1)
 weather = dictData['weather'][0]['main']
+
+
 
 sw = {
     'Rain': '雨',
@@ -37,7 +51,7 @@ sw = {
 
 msgRoot = MIMEMultipart('related')
 # 三个参数：第一个为文本内容，第二个 plain 设置文本格式，第三个 utf-8 设置编码
-msgText = MIMEText('早上好, 芝加哥的朋友\n'+'今天天气: ' + sw[weather] + '\n最低气温 : ' + str(temMin) + '°C' + '\t最高气温 : ' + str(temMax) + '°C\n' + '好冷啊\t祝您生活愉快\n', 'plain', 'utf-8')
+msgText = MIMEText('早上好, 芝加哥的朋友\n'+'今天天气: ' + sw[weather] + '\n最低气温 : ' + str(temMin) + '°C' + '\t最高气温 : ' + str(temMax) + '°C\n' + word + '\t祝您生活愉快\n', 'plain', 'utf-8')
 msgRoot['From'] = Header("力量的花生", 'utf-8')
 msgRoot['To'] = Header("渺小的凡人", 'utf-8')
 msgRoot.attach(msgText)
