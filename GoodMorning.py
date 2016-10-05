@@ -23,8 +23,8 @@ mail_user="tlmorphing@gmail.com"    #用户名
 mail_pass="morphing"   #口令
 
 sender = 'tlmorphing@gmail.com'
-receivers = ['tlmorphing@gmail.com', 'yzhou108@hawk.iit.edu', 'qsong4@hawk.iit.edu', 'byang24@hawk.iit.edu']  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
-# receivers = ['tlmorphing@gmail.com', 'tlmorphing@gmail.com', 'tlmorphing@gmail.com']  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
+# receivers = ['tlmorphing@gmail.com', 'yzhou108@hawk.iit.edu', 'qsong4@hawk.iit.edu', 'byang24@hawk.iit.edu']  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
+receivers = ['tlmorphing@gmail.com', 'tanglonglevy@outlook.com', '452479893@qq.com', 'tllevybright@gmail.com']  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
 
 
 tem = round(dictData['main']['temp']-273.15,1)
@@ -53,6 +53,7 @@ sw = {
 }
 
 for i in range(len(receivers)):
+    msgRoot = None
     msgRoot = MIMEMultipart('related')
     if i != 3:
         hero, win, lost = dota.get(account[i])
@@ -76,7 +77,9 @@ for i in range(len(receivers)):
     else:
         msgText = MIMEText('早上好, 芝加哥的朋友\n'+'今天天气: ' + sw[weather] + '\n最低气温 : ' + str(temMin) + '°C' + '\t最高气温 : ' + str(temMax) + '°C\n' + word + '\t祝您生活愉快\n', 'plain', 'utf-8')
     msgRoot['From'] = Header("力量的花生", 'utf-8')
-    msgRoot['To'] = Header("渺小的凡人", 'utf-8')
+    to_nickName = Header("渺小的凡人", 'utf-8')
+    to_nickName.append('<' + receivers[i]  + '>', 'ascii')
+    msgRoot['To'] = to_nickName
     msgRoot.attach(msgText)
 
     index = random.randint(1,5)
@@ -95,7 +98,8 @@ for i in range(len(receivers)):
         smtpObj.ehlo()
         smtpObj.starttls()
         smtpObj.login(mail_user, mail_pass)
-        smtpObj.sendmail(sender, receivers[i], msgRoot.as_string())
+        smtpObj.sendmail(sender, [receivers[i]], msgRoot.as_string())
+        smtpObj.quit()
         print("Successful")
     except smtplib.SMTPException:
         print("Error")
