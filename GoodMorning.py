@@ -10,6 +10,9 @@ import random
 import json
 
 import getData
+import dota
+
+account = [201956451, 247810685]
 
 rawData = getData.getData('http://api.openweathermap.org/data/2.5/weather?APPID=06dc04f1d54e930bdc3d4372d7291dd1','Chicago')
 strData = str(rawData, encoding='utf-8')
@@ -21,7 +24,7 @@ mail_pass="morphing"   #口令
 
 sender = 'tlmorphing@gmail.com'
 receivers = ['tlmorphing@gmail.com', 'yzhou108@hawk.iit.edu', 'byang24@hawk.iit.edu']  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
-# receivers = ['tlmorphing@gmail.com']  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
+# receivers = ['tlmorphing@gmail.com', 'tlmorphing@gmail.com', 'tlmorphing@gmail.com']  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
 
 
 tem = round(dictData['main']['temp']-273.15,1)
@@ -49,31 +52,51 @@ sw = {
     'Clear': '晴'
 }
 
-msgRoot = MIMEMultipart('related')
-# 三个参数：第一个为文本内容，第二个 plain 设置文本格式，第三个 utf-8 设置编码
-msgText = MIMEText('早上好, 芝加哥的朋友\n'+'今天天气: ' + sw[weather] + '\n最低气温 : ' + str(temMin) + '°C' + '\t最高气温 : ' + str(temMax) + '°C\n' + word + '\t祝您生活愉快\n', 'plain', 'utf-8')
-msgRoot['From'] = Header("力量的花生", 'utf-8')
-msgRoot['To'] = Header("渺小的凡人", 'utf-8')
-msgRoot.attach(msgText)
+for i in range(len(receivers)):
+    msgRoot = MIMEMultipart('related')
+    if i != 2:
+        hero, win, lost = dota.get(account[i])
+        heroStr = ''
+        hero = list(set(hero))
+        length = len(hero)
+        if length == 1:
+            heroStr = hero[0]
+        else:
+            for j in range(length):
+                if j == 0:
+                    heroStr += hero[j]
+                elif j == length-1:
+                    heroStr += '和' + hero[j]
+                else:
+                    heroStr += ', ' + hero[j]
 
-index = random.randint(1,5)
+        # 三个参数：第一个为文本内容，第二个 plain 设置文本格式，第三个 utf-8 设置编码
+        msgText = MIMEText('早上好, 芝加哥的朋友\n'+'今天天气: ' + sw[weather] + '\n最低气温 : ' + str(temMin) + '°C' + '\t最高气温 : ' + str(temMax) + '°C\t' + word + '\n您昨天司职' +
+                           heroStr + ', 获得了' + str(win) + '胜' + str(lost) + '负的某改战绩\n' + '祝您生活愉快\n', 'plain', 'utf-8')
+    else:
+        msgText = MIMEText('早上好, 芝加哥的朋友\n'+'今天天气: ' + sw[weather] + '\n最低气温 : ' + str(temMin) + '°C' + '\t最高气温 : ' + str(temMax) + '°C\n' + word + '\t祝您生活愉快\n', 'plain', 'utf-8')
+    msgRoot['From'] = Header("力量的花生", 'utf-8')
+    msgRoot['To'] = Header("渺小的凡人", 'utf-8')
+    msgRoot.attach(msgText)
 
-fp = open('./images/' + weather.lower() + str(index) + '.jpg', 'rb')
-msgImage = MIMEImage(fp.read())
-fp.close()
+    index = random.randint(1,5)
 
-msgRoot.attach(msgImage)
+    fp = open('./images/' + weather.lower() + str(index) + '.jpg', 'rb')
+    msgImage = MIMEImage(fp.read())
+    fp.close()
 
-subject = '又是新的一天'
-msgRoot['Subject'] = Header(subject, 'utf-8')
+    msgRoot.attach(msgImage)
 
-try:
-    smtpObj = smtplib.SMTP("smtp.gmail.com", 587)
-    smtpObj.ehlo()
-    smtpObj.starttls()
-    smtpObj.login(mail_user, mail_pass)
-    smtpObj.sendmail(sender, receivers, msgRoot.as_string())
-    print("Successful")
-except smtplib.SMTPException:
-    print("Error")
+    subject = '又是新的一天'
+    msgRoot['Subject'] = Header(subject, 'utf-8')
+
+    try:
+        smtpObj = smtplib.SMTP("smtp.gmail.com", 587)
+        smtpObj.ehlo()
+        smtpObj.starttls()
+        smtpObj.login(mail_user, mail_pass)
+        smtpObj.sendmail(sender, receivers[i], msgRoot.as_string())
+        print("Successful")
+    except smtplib.SMTPException:
+        print("Error")
 
