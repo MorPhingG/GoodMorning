@@ -12,7 +12,7 @@ import json
 import getData
 import dota
 
-account = [201956451, 247810685]
+account = [201956451, 247810685, 132130668]
 
 rawData = getData.getData('http://api.openweathermap.org/data/2.5/weather?APPID=06dc04f1d54e930bdc3d4372d7291dd1','Chicago')
 strData = str(rawData, encoding='utf-8')
@@ -23,7 +23,7 @@ mail_user="tlmorphing@gmail.com"    #用户名
 mail_pass="morphing"   #口令
 
 sender = 'tlmorphing@gmail.com'
-receivers = ['tlmorphing@gmail.com', 'yzhou108@hawk.iit.edu', 'byang24@hawk.iit.edu']  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
+receivers = ['tlmorphing@gmail.com', 'yzhou108@hawk.iit.edu', 'qsong4@hawk.iit.edu', 'byang24@hawk.iit.edu']  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
 # receivers = ['tlmorphing@gmail.com', 'tlmorphing@gmail.com', 'tlmorphing@gmail.com']  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
 
 
@@ -54,7 +54,7 @@ sw = {
 
 for i in range(len(receivers)):
     msgRoot = MIMEMultipart('related')
-    if i != 2:
+    if i != 3:
         hero, win, lost = dota.get(account[i])
         heroStr = ''
         hero = list(set(hero))
