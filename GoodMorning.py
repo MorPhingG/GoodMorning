@@ -57,23 +57,27 @@ for i in range(len(receivers)):
     msgRoot = MIMEMultipart('related')
     if i != 3:
         hero, win, lost = dota.get(account[i])
-        heroStr = ''
-        hero = list(set(hero))
-        length = len(hero)
-        if length == 1:
-            heroStr = hero[0]
-        else:
-            for j in range(length):
-                if j == 0:
-                    heroStr += hero[j]
-                elif j == length-1:
-                    heroStr += '和' + hero[j]
-                else:
-                    heroStr += ', ' + hero[j]
+        if hero != []:
+            heroStr = ''
+            hero = list(set(hero))
+            length = len(hero)
+            if length == 1:
+                heroStr = hero[0]
+            else:
+                for j in range(length):
+                    if j == 0:
+                        heroStr += hero[j]
+                    elif j == length-1:
+                        heroStr += '和' + hero[j]
+                    else:
+                        heroStr += ', ' + hero[j]
 
-        # 三个参数：第一个为文本内容，第二个 plain 设置文本格式，第三个 utf-8 设置编码
-        msgText = MIMEText('早上好, 芝加哥的朋友\n'+'今天天气: ' + sw[weather] + '\n最低气温 : ' + str(temMin) + '°C' + '\t最高气温 : ' + str(temMax) + '°C\t' + word + '\n您昨天司职' +
-                           heroStr + ', 获得了' + str(win) + '胜' + str(lost) + '负的某改战绩\n' + '祝您生活愉快\n', 'plain', 'utf-8')
+            # 三个参数：第一个为文本内容，第二个 plain 设置文本格式，第三个 utf-8 设置编码
+            msgText = MIMEText('早上好, 芝加哥的朋友\n'+'今天天气: ' + sw[weather] + '\n最低气温 : ' + str(temMin) + '°C' + '\t最高气温 : ' + str(temMax) + '°C\t' + word + '\n您昨天司职' +
+                               heroStr + ', 获得了' + str(win) + '胜' + str(lost) + '负的某改战绩\n' + '祝您生活愉快\n', 'plain', 'utf-8')
+        else:
+            msgText = MIMEText('早上好, 芝加哥的朋友\n'+'今天天气: ' + sw[weather] + '\n最低气温 : ' + str(temMin) + '°C' + '\t最高气温 : ' + str(temMax) + '°C\t' + word +
+                               '\n您昨天一把未战\t何不邀请朋友来开黑呢\n' + '祝您生活愉快\n', 'plain', 'utf-8')
     else:
         msgText = MIMEText('早上好, 芝加哥的朋友\n'+'今天天气: ' + sw[weather] + '\n最低气温 : ' + str(temMin) + '°C' + '\t最高气温 : ' + str(temMax) + '°C\n' + word + '\t祝您生活愉快\n', 'plain', 'utf-8')
     msgRoot['From'] = Header("力量的花生", 'utf-8')
