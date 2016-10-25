@@ -3,6 +3,7 @@ import json
 import time
 
 class GetDotaData:
+
     def get(accountId):
         api = dota2api.Initialise("3696FD54789FF3D37C752351029AD9D9")
         match = api.get_match_history(account_id = accountId)

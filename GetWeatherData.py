@@ -3,6 +3,7 @@ import urllib.parse
 import json
 
 class GetWeatherData:
+
     def getfile(file):
         f = open(file)
         rawContent = f.readlines()

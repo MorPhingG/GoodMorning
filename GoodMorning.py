@@ -3,6 +3,7 @@
 
 import smtplib
 import random
+import os
 
 from email.mime.text import MIMEText
 from email.header import Header
@@ -10,6 +11,7 @@ from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from GetWeatherData import GetWeatherData
 from GetDotaData import GetDotaData
+from GetPicture import GetPicture
 
 
 class GoodMorning:
@@ -90,9 +92,14 @@ class GoodMorning:
 
         index = random.randint(1,5)
 
-        fp = open('./images/' + self.weather.lower() + str(index) + '.jpg', 'rb')
+        # fp = open('./images/' + self.weather.lower() + str(index) + '.jpg', 'rb')
+        # msgImage = MIMEImage(fp.read())
+        # fp.close()
+
+        fp = open('0.jpg', 'rb')
         msgImage = MIMEImage(fp.read())
         fp.close()
+        os.remove('0.jpg')
 
         msgRoot.attach(msgImage)
 
@@ -112,8 +119,10 @@ class GoodMorning:
 
     def start(self, number):
         self.weatherData = GetWeatherData.getWeatherData(self) # get weather data
+        GetPicture.start(self)                                 # get the picture
         self.temCompare()
-        self.dotaHero, self.dotaWin, self.dotaLost = GetDotaData.get(self.dotaAccount[number])
+        if number != 3:
+            self.dotaHero, self.dotaWin, self.dotaLost = GetDotaData.get(self.dotaAccount[number])
         self.sendEmail(number)
 
 if __name__ == '__main__':
