@@ -74,8 +74,6 @@ class GoodMorning:
                             heroStr += ', ' + self.dotaHero[j]
 
                 # 三个参数：第一个为文本内容，第二个 plain 设置文本格式，第三个 utf-8 设置编码
-                print(self.weather)
-                print('早上好, 芝加哥的朋友\n' +'今天天气: ' + self.sw[self.weather] + '\n最低气温 : ')
                 msgText = MIMEText('早上好, 芝加哥的朋友\n' +'今天天气: ' + self.sw[self.weather] + '\n最低气温 : ' + str(self.temMin) + '°C' + '\t最高气温 : ' + str(self.temMax) + '°C\t' + self.word + '\n您昨天司职' +
                                    heroStr + ', 获得了' + str(self.dotaWin) + '胜' + str(self.dotaLost) +
                                    '负的某改战绩\n' + '祝您生活愉快\n', 'plain', 'utf-8')
