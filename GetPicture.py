@@ -1,5 +1,6 @@
 import re
 import urllib.request
+import random
 
 class GetPicture:
 
@@ -15,8 +16,8 @@ class GetPicture:
         imgre = re.compile(reg)
         imglist = re.findall(imgre,html)
         print(imglist)
-        x = 0
-        urllib.request.urlretrieve(imglist[0],'%s.jpg' % x)
+        x = random.randint(0,29)
+        urllib.request.urlretrieve(imglist[x],'%s.jpg' % 0)
 
     def start(self):
         html = GetPicture.getHtml("http://www.meizitu.com/")

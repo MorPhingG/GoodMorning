@@ -90,7 +90,7 @@ class GoodMorning:
         msgRoot['To'] = to_nickName
         msgRoot.attach(msgText)
 
-        index = random.randint(1,5)
+        # index = random.randint(1,5)
 
         # fp = open('./images/' + self.weather.lower() + str(index) + '.jpg', 'rb')
         # msgImage = MIMEImage(fp.read())
