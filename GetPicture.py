@@ -16,6 +16,9 @@ class GetPicture:
         imgre = re.compile(reg)
         imglist = re.findall(imgre,html)
         print(imglist)
+        opener = urllib.request.build_opener()
+        opener.addheaders = [('User-Agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1941.0 Safari/537.36')]
+        urllib.request.install_opener(opener)
         x = random.randint(0,29)
         urllib.request.urlretrieve(imglist[x],'%s.jpg' % 0)
 
