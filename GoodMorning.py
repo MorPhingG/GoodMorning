@@ -36,7 +36,8 @@ class GoodMorning:
             'Rain': '雨',
             'Clouds': '多云',
             'Snow': '雪',
-            'Clear': '晴'
+            'Clear': '晴',
+            'Fog': '雾'
         } # 对应的中文
 
     def temCompare(self):
@@ -130,3 +131,7 @@ if __name__ == '__main__':
         goodMorning.start(i)
 
 
+def swap(a, b):
+    tem = a
+    a = b
+    b = tem
