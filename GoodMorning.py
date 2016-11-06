@@ -37,7 +37,8 @@ class GoodMorning:
             'Clouds': '多云',
             'Snow': '雪',
             'Clear': '晴',
-            'Fog': '雾'
+            'Fog': '雾',
+            'Mist': '雾'
         } # 对应的中文
 
     def temCompare(self):
